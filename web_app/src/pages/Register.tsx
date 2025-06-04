@@ -69,7 +69,7 @@ export default function Register() {
             <label className="block text-purple-100 text-sm mb-2">Nom complet</label>
             <input 
               type="text" 
-              placeholder="Jean Dupont" 
+              placeholder="NACANABO Abdel Latif" 
               {...r("nom_complet")} 
               className="w-full p-3 rounded-md bg-purple-700/50 text-white placeholder-purple-300 border border-purple-500/30 focus:outline-none focus:border-purple-300" 
             />
