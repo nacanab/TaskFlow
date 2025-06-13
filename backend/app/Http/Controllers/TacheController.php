@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\TacheRequest;
 use App\Models\Tache;
+use App\Models\Projet;
 use Exception;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
@@ -54,10 +55,11 @@ class TacheController extends Controller
             $data['creator_id'] = $user->id;
             $tache=Tache::create($data);
             if($request->user_id){
+                $projet = Projet::findOrFail($request->projet_id);
                 Notification::create([
                     'user_id'=> $request->user_id,
                     'tache_id'=>$tache->id,
-                    'contenu'=> 'La tâche '.$tache->titre.' vous a été assignée.'
+                    'contenu'=> 'La tâche '.$tache->titre.' du projet '.$projet->titre.' vous a été assignée.'
                 ]);
             }
             return response()->json([
@@ -112,10 +114,11 @@ class TacheController extends Controller
             $tache=Tache::findOrFail($tache->id);
             $tache->update($data);
             if($request->user_id){
+                $projet = Projet::findOrFail($request->projet_id);
                 Notification::create([
                     'user_id'=> $request->user_id,
                     'tache_id'=>$tache->id,
-                    'contenu'=> 'La tâche '.$tache->titre.' vous a été assignée.'
+                    'contenu'=> 'La tâche '.$tache->titre.' du projet '.$projet->titre.' vous a été assignée.'
                 ]);
             }
             return response()->json([

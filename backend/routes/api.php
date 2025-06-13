@@ -59,7 +59,7 @@ Route::prefix('/v1')->group(function(){
         Route::middleware('auth:sanctum')->get('/creator/{equipe_id}',[EquipeController::class, 'get_team_creator'])->name('equipe.creator.get');
 
         Route::get('/{equipe_id}',[EquipeUsersController::class, 'index'])->name('equipe.get.users');
-        Route::post('/{equipe_id}',[EquipeUsersController::class,'store'])->name('equipe.post.users');
+        Route::middleware('auth:sanctum')->post('/{equipe_id}',[EquipeUsersController::class,'store'])->name('equipe.post.users');
         Route::delete('/detacher',[EquipeUsersController::class, 'destroy'])->name('equipe.user.detacher');
 
     });
