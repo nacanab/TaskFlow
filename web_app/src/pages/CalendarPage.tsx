@@ -113,7 +113,7 @@ const CalendarPage: React.FC = () => {
           <div className="flex flex-col md:flex-row md:items-center justify-between">
             <div className="flex items-center mb-4 md:mb-0">
               <Calendar className="text-indigo-600 h-6 w-6 mr-2" />
-              <h1 className="text-2xl font-bold text-gray-800">Calendrier de mes tâches</h1>
+              <h1 className="text-2xl font-bold text-gray-800">Calendrier de tâches</h1>
             </div>
             
             <div className="flex space-x-3">
@@ -123,14 +123,6 @@ const CalendarPage: React.FC = () => {
               >
                 <Settings className="h-4 w-4 mr-1" />
                 <span>Paramètres</span>
-              </button>
-              
-              <button 
-                className="flex items-center bg-indigo-600 text-white px-4 py-2 rounded-md hover:bg-indigo-700 transition duration-150 shadow-sm"
-                onClick={() => handleDateClick({ date: new Date(), dateStr: new Date().toISOString(), allDay: true, dayEl: document.createElement('div'), jsEvent: {} as any })}
-              >
-                <Plus className="h-4 w-4 mr-1" />
-                <span>Nouvelle tâche</span>
               </button>
             </div>
           </div>

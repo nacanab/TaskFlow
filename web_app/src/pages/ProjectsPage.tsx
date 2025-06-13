@@ -21,6 +21,7 @@ interface Projet {
   date_debut: string;
   date_fin: string;
   equipe_id: number;
+  user_id:number;
 }
 
 interface Jalon {
@@ -34,7 +35,7 @@ interface Jalon {
 interface PieceJointe {
   id: number;
   type: string;
-  url: string;
+  fichier_url: string;
   tache_id: number;
 }
 
@@ -57,7 +58,7 @@ const baseURL = 'http://localhost:8000/api/v1'; // Remplacez par l'URL de votre 
 const user=getUser();
 const piecesJointesApi = {
 
-  fetchPiecesJointes: async (tacheId) => {
+  fetchPiecesJointes: async (tacheId:number) => {
     try {
       const response = await axios.get(`${baseURL}/pieces_jointes/taches/${tacheId}`);
       return await response.data.pieces_jointes;
@@ -90,7 +91,7 @@ const piecesJointesApi = {
   }
 };
 
-const getFileIcon = (type) => {
+const getFileIcon = (type:String) => {
   switch (type.toLowerCase()) {
     case 'pdf': return <File className="w-4 h-4 text-red-500" />;
     case 'doc':
@@ -206,7 +207,7 @@ const ProjectPage: React.FC = () => {
   const fetchTaches = async (projetId: number) => {
     try {
       const response = await axios.get(`${baseURL}/taches?projet_id=${projetId}`,{ headers: { Authorization: `Bearer ${localStorage.getItem('token')}` } });
-      const tachesAvecPJ = await Promise.all(response.data.taches.map(async (tache) => {
+      const tachesAvecPJ = await Promise.all(response.data.taches.map(async (tache:Tache) => {
         const piecesJointes = await piecesJointesApi.fetchPiecesJointes(tache.id);
         return { ...tache, pieces_jointes: piecesJointes };
       }));
@@ -406,7 +407,7 @@ const ProjectPage: React.FC = () => {
     }
   };
 
-  const downloadPieceJointe = (pieceJointe) => {
+  const downloadPieceJointe = (pieceJointe:PieceJointe) => {
     piecesJointesApi.downloadPieceJointe(pieceJointe);
   };
 
@@ -621,6 +622,16 @@ const ProjectPage: React.FC = () => {
               </div>
             </div>
           )}
+
+          { projets.length === 0 && activeTab === 'projets' && (
+            <div className="bg-white shadow rounded-lg p-8 text-center">
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-12 w-12 mx-auto text-gray-400 mb-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
+              </svg>
+              <h3 className="text-lg font-medium text-gray-900 mb-2">Aucune projet trouvé</h3>
+            </div>
+          )}
+          
 
           {/* Détails du projet */}
           {activeTab === 'details' && selectedProjet && (

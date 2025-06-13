@@ -2,7 +2,6 @@ import { Link, useLocation } from "react-router-dom";
 import { useState } from "react";
 import { logout } from "../api/auth";
 import {getUser} from "../api/auth";
-import { FaUser, FaTachometerAlt, FaUsers, FaUserFriends, FaAward, FaProjectDiagram, FaTasks } from "react-icons/fa";
 
 interface NavItem {
   path: string;
